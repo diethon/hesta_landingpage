@@ -20,3 +20,26 @@ export const FAQ: [string, string][] = [
 
 // Web dashboard (React app), served separately from this landing page.
 export const DASHBOARD_URL = "https://dashboard.hesta.homes";
+
+export function getRuntimeDashboardUrl(): string {
+  if (typeof window !== "undefined") {
+    const host = window.location.hostname;
+    if (host === "localhost" || host === "127.0.0.1") {
+      return process.env.NEXT_PUBLIC_DASHBOARD_URL || "http://localhost:5173";
+    }
+  }
+  return process.env.NEXT_PUBLIC_DASHBOARD_URL || DASHBOARD_URL;
+}
+
+export function getRuntimeApiBaseUrl(): string {
+  if (process.env.NEXT_PUBLIC_API_URL) {
+    return process.env.NEXT_PUBLIC_API_URL.replace(/\/+$/, "");
+  }
+  if (typeof window !== "undefined") {
+    const host = window.location.hostname;
+    if (host === "localhost" || host === "127.0.0.1") {
+      return "http://localhost:8080";
+    }
+  }
+  return "https://dashboard.hesta.homes";
+}

@@ -14,8 +14,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="vi" className={`${sans.variable} ${brand.variable} ${mono.variable}`}>
-      <body>{children}</body>
+    <html lang="vi" className={`${sans.variable} ${brand.variable} ${mono.variable}`} suppressHydrationWarning>
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }

@@ -17,6 +17,7 @@ import Security from "./Security";
 import Platforms from "./Platforms";
 import TechFlow from "./TechFlow";
 import { Faq, Timeline } from "./ProjectSections";
+import InstallSection from "./InstallSection";
 import FinalCta from "./FinalCta";
 import SectionDivider from "./SectionDivider";
 import BackToTop from "./BackToTop";
@@ -44,6 +45,7 @@ export default function Landing() {
             <a href="#twin">{tr("Làm gì")}</a>
             <a href="#playground">{tr("Thử ngay")}</a>
             <a href="#energy">{tr("Tiết kiệm")}</a>
+            <a href="#install">{tr("Lắp đặt")}</a>
             <a href="#journey">{tr("Đồ án")}</a>
           </nav>
           <div className="head-actions">
@@ -79,6 +81,9 @@ export default function Landing() {
         <TechFlow />
         <Timeline />
         <Faq />
+        <SectionDivider top={BG} bottom={SKY} />
+        <InstallSection />
+        <SectionDivider top={SKY} bottom={BG} />
         <FinalCta />
         <SectionDivider top={BG} bottom={INK} />
       </main>
