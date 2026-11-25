@@ -18,6 +18,14 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run build
+      - name: Check local assets exist
+        # Static export has no server: any src/href to a missing file (e.g. /_next/image) is a broken asset.
+        run: |
+          missing=0
+          for u in $(grep -ohE '(src|href|srcSet)="/[^"#?, ]*' out/*.html | sed -E 's/^[a-zA-Z]+="//' | sort -u); do
+            [ -e "out$u" ] || [ -e "out$u.html" ] || { echo "missing: $u"; missing=1; }
+          done
+          exit $missing
       - uses: actions/upload-artifact@v4
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         with:
@@ -44,4 +52,7 @@ jobs:
       - name: Upload site
         run: rsync -az --delete out/ "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/hesta-landing/"
       - name: Smoke test
-        run: curl -fsS https://hesta.homes/ | grep -q '<title>HESTA'
+        run: |
+          curl -fsS https://hesta.homes/ | grep -q '<title>HESTA'
+          curl -fsS -o /dev/null https://hesta.homes/en
+          curl -fsS -o /dev/null https://hesta.homes/screens/security-center.png
