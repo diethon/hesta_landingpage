@@ -4,6 +4,7 @@ import Particles, { type ShapeKey } from "./Particles";
 import LocalGreeting from "./LocalGreeting";
 import { prefersReducedMotion } from "@/lib/motion";
 import { useTr } from "@/lib/i18n";
+import { DASHBOARD_URL } from "@/content/project";
 
 const NAMES: Record<ShapeKey, string> = { house: "Ngôi nhà", sphere: "Hệ sinh thái thiết bị", wave: "Dòng dữ liệu", logo: "HESTA" };
 
@@ -51,7 +52,7 @@ export default function Hero() {
         <h1>{tr("Ngôi nhà của bạn, sống trong từng điểm dữ liệu.")}</h1>
         <p className="lead">{tr("HESTA gom mọi cảm biến, thiết bị và kịch bản vào một bản sao số của ngôi nhà. Theo dõi theo thời gian thực, phát hiện bất thường và xử lý trước khi thành sự cố.")}</p>
         <div className="cta-row">
-          <a className="btn btn-ink" href="#start">{tr("Dùng bản web")}</a>
+          <a className="btn btn-ink" href={DASHBOARD_URL}>{tr("Dùng bản web")}</a>
           <a className="btn btn-glass" href="#platforms">{tr("Tải app mobile")}</a>
         </div>
         <dl className="stats">

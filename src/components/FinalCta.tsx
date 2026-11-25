@@ -1,6 +1,7 @@
 "use client";
 import Particles from "./Particles";
 import { useTr } from "@/lib/i18n";
+import { DASHBOARD_URL } from "@/content/project";
 
 export default function FinalCta() {
   const tr = useTr();
@@ -12,7 +13,7 @@ export default function FinalCta() {
         <h2>{tr("Thắp lửa cho ngôi nhà số của bạn.")}</h2>
         <p className="lead">{tr("Thêm ngôi nhà đầu tiên, kết nối thiết bị và để HESTA làm phần còn lại.")}</p>
         <div className="cta-row center">
-          <a className="btn btn-ink" href="#top">{tr("Tạo tài khoản")}</a>
+          <a className="btn btn-ink" href={`${DASHBOARD_URL}/register`}>{tr("Tạo tài khoản")}</a>
           <a className="btn btn-glass" href="#features">{tr("Xem tính năng")}</a>
         </div>
       </div>

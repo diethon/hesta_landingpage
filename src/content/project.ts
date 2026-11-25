@@ -17,3 +17,6 @@ export const FAQ: [string, string][] = [
   ["Té ngã mà không ai trả lời thì sao?", "HESTA đếm ngược 30 giây. Không ai xác nhận “Tôi ổn” thì hệ thống bật còi và kích hoạt gọi khẩn cấp."],
   ["Có dùng trên điện thoại được không?", "Có. Bản web chạy trên trình duyệt điện thoại, và có app mobile viết bằng Flutter."],
 ];
+
+// Web dashboard (React app), served separately from this landing page.
+export const DASHBOARD_URL = "https://dashboard.hesta.homes";

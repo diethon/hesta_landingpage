@@ -10,6 +10,7 @@ export const EN: Record<string, string> = {
   "Tiết kiệm": "Savings",
   "Đồ án": "Project",
   "Dùng thử": "Try HESTA",
+  "Vào Dashboard": "Open Dashboard",
   "Đồ án Capstone FPTU · Dữ liệu trên trang là minh họa.": "FPT University Capstone project · Figures on this page are illustrative.",
   "Mẹo: nhấn P để vào chế độ trình chiếu.": "Tip: press P for presenter mode.",
   "Về đầu trang": "Back to top",

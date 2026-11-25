@@ -22,6 +22,7 @@ import SectionDivider from "./SectionDivider";
 import BackToTop from "./BackToTop";
 import Presenter from "./Presenter";
 import { Logo } from "./Logo";
+import { DASHBOARD_URL } from "@/content/project";
 import { useLang, useTr } from "@/lib/i18n";
 
 // Màu nền 2 phía của mỗi đường phân cách phải khớp với section liền trên/dưới.
@@ -49,7 +50,7 @@ export default function Landing() {
             <a className="lang-switch" href={lang === "vi" ? "/en" : "/"} hrefLang={lang === "vi" ? "en" : "vi"} aria-label={lang === "vi" ? "Switch to English" : "Chuyển sang tiếng Việt"}>
               <span data-on={lang === "vi"}>VI</span><span data-on={lang === "en"}>EN</span>
             </a>
-            <a className="btn btn-ink btn-sm" href="#start">{tr("Dùng thử")}</a>
+            <a className="btn btn-ink btn-sm" href={`${DASHBOARD_URL}/login`}>{tr("Vào Dashboard")}</a>
           </div>
         </div>
       </header>
