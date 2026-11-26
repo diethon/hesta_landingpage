@@ -52,7 +52,7 @@ export default function Landing() {
             <a className="lang-switch" href={lang === "vi" ? "/en" : "/"} hrefLang={lang === "vi" ? "en" : "vi"} aria-label={lang === "vi" ? "Switch to English" : "Chuyển sang tiếng Việt"}>
               <span data-on={lang === "vi"}>VI</span><span data-on={lang === "en"}>EN</span>
             </a>
-            <a className="btn btn-ink btn-sm" href={`${DASHBOARD_URL}/login`}>{tr("Vào Dashboard")}</a>
+            <a className="btn btn-ink btn-sm" href={`${DASHBOARD_URL}/login`}><span className="lbl-full">{tr("Vào Dashboard")}</span><span className="lbl-short">Dashboard</span></a>
           </div>
         </div>
       </header>

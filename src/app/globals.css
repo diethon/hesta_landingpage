@@ -84,6 +84,9 @@ h2 { font-size: clamp(30px, 4.2vw, 56px); line-height: 1.08; margin: 10px 0 16px
 .site-header nav a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
 .site-header nav a:hover { color: var(--ink); }
 @media (max-width: 760px) { .site-header nav { display: none; } }
+.head-actions .btn { white-space: nowrap; }
+.lbl-short { display: none; }
+@media (max-width: 480px) { .lbl-full { display: none; } .lbl-short { display: inline; } }
 
 /* ---------- Hero ---------- */
 .hero { position: relative; min-height: clamp(600px, calc(100svh - var(--hh)), 920px); overflow: hidden; background: radial-gradient(90% 80% at 75% 40%, #d6eef9 0%, rgba(248, 252, 255, 0) 65%), radial-gradient(50% 50% at 90% 90%, #e3f8ef 0%, rgba(248, 252, 255, 0) 70%), var(--bg); }
@@ -116,7 +119,7 @@ h2 { font-size: clamp(30px, 4.2vw, 56px); line-height: 1.08; margin: 10px 0 16px
 .acro b { font-family: var(--font-brand), sans-serif; font-size: 28px; font-weight: 800; color: var(--primary-strong); width: 28px; flex: none; }
 .acro span { font-size: 14px; color: var(--muted); }
 .acro strong { display: block; color: var(--ink); font-size: 16px; }
-@media (max-width: 900px) { .ns-text .lead { display: none; } .ns-label { display: none; } .acro span { font-size: 13px; } .acro { gap: 4px; } }
+@media (max-width: 900px) { .ns-visual { height: 100%; min-height: 0; display: flex; justify-content: center; align-items: center; } .ns-mark { height: 100%; max-height: 100%; } .ns-text .lead { display: none; } .ns-label { display: none; } .acro span { font-size: 13px; } .acro { gap: 4px; } }
 
 /* Problem */
 .problem { background: linear-gradient(180deg, var(--bg), #fff5f2 50%, var(--bg)); }
@@ -166,6 +169,7 @@ h2 { font-size: clamp(30px, 4.2vw, 56px); line-height: 1.08; margin: 10px 0 16px
 .ticket h4 { margin: 8px 0 2px; font-size: 15px; color: var(--ink); }
 .ticket p { margin: 0; font-size: 13px; color: var(--muted); }
 .demo-note { position: absolute; top: 10px; right: 14px; font-family: var(--font-mono), monospace; font-size: 11px; color: var(--muted); }
+.chart-card .demo-note { top: auto; bottom: 10px; left: 14px; right: auto; } /* góc trên đã có nhãn series */
 
 /* Day / night */
 .day .sticky { background: #cfe6f3; }
@@ -180,7 +184,7 @@ h2 { font-size: clamp(30px, 4.2vw, 56px); line-height: 1.08; margin: 10px 0 16px
 .events { display: grid; gap: 8px; width: min(330px, 100%); }
 .events div { background: rgba(255, 255, 255, 0.86); backdrop-filter: blur(8px); font-size: 14px; padding: 10px 14px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.6); box-shadow: 0 6px 18px rgba(31, 51, 68, 0.08); animation: fade 0.4s ease; }
 .events b { font-family: var(--font-mono), monospace; color: var(--on); margin-right: 8px; }
-@media (max-width: 760px) { .events { display: none; } .day-copy .lead { display: none; } }
+@media (max-width: 760px) { .events { display: none; } .day-copy .lead, .day-copy .story { display: none; } .day-copy { padding: 14px 16px; } }
 
 /* ---------- Tương tác: sự cố, giọng nói, lời chào ---------- */
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -261,7 +265,8 @@ html[data-present="1"] .site-header:hover { opacity: 1; }
 .hero:has(.cursor[data-on="1"]) { cursor: none; }
 .hero:has(.cursor[data-on="1"]) :is(a, button) { cursor: pointer; }
 .hero-hint { position: absolute; right: max(20px, env(safe-area-inset-right, 0px)); bottom: 70px; margin: 0; font-family: var(--font-mono), monospace; font-size: 11px; color: var(--muted); }
-@media (pointer: coarse) { .hero-hint { display: none; } }
+.hint-touch { display: none; }
+@media (pointer: coarse) { .hint-mouse { display: none; } .hint-touch { display: inline; } .hero-hint { left: 20px; right: auto; bottom: 74px; } }
 
 /* ---------- Trước / Sau ---------- */
 .ba { padding-block: clamp(60px, 10vh, 110px) 0; }
@@ -471,7 +476,7 @@ html[data-present="1"] .site-header:hover { opacity: 1; }
 .sw::after { content: ""; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; transition: left 0.2s; }
 .sw.on { background: var(--mint-strong); }
 .sw.on::after { left: 14px; }
-@media (max-width: 760px) { .phone { position: relative; right: auto; margin-left: -38%; width: 46%; } .devices { align-items: center; } }
+@media (max-width: 760px) { .phone { position: relative; right: auto; margin-left: -38%; width: max(46%, 184px); flex: none; } .devices { align-items: center; } }
 
 /* Tech */
 .tech { padding-block: clamp(40px, 8vh, 80px); }
@@ -645,3 +650,14 @@ html[data-present="1"] .site-header:hover { opacity: 1; }
 .inst-picked li b { font-size: 13px; color: var(--ink); }
 .inst-picked li span { font-size: 12px; color: var(--muted); }
 .inst-picked li em { font-style: normal; font-weight: 700; color: var(--primary-strong); }
+
+/* ---------- Màn cảm ứng: cuộn mượt ----------
+   backdrop-filter phải blur lại nền mỗi khung hình khi cuộn, rất nặng trên GPU điện thoại (nhất là header sticky).
+   Bỏ blur, nền đã đủ đục nên giao diện gần như không đổi. */
+@media (pointer: coarse) {
+  * { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+  .site-header { background: rgba(248, 252, 255, 0.97); }
+  .to-top, .pause, .greet, .ns-label { background: rgba(255, 255, 255, 0.96); }
+  .glass { background: rgba(255, 255, 255, 0.9); }
+  html { -webkit-tap-highlight-color: transparent; }
+}

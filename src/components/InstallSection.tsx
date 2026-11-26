@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { clamp, runWhileVisible } from "@/lib/motion";
+import { clamp, runWhileVisible, viewRect } from "@/lib/motion";
 import { useLang, useTr } from "@/lib/i18n";
 import { getRuntimeApiBaseUrl, getRuntimeDashboardUrl } from "@/content/project";
 import "./install.css";
@@ -283,7 +283,7 @@ export default function InstallSection() {
     if (!sec) return;
     const cards = [...sec.querySelectorAll<HTMLElement>(".inst-reveal")];
     return runWhileVisible(sec, () => {
-      const r = sec.getBoundingClientRect();
+      const r = viewRect(sec);
       const p = clamp((innerHeight * 0.88 - r.top) / Math.max(220, innerHeight * 0.55));
       cards.forEach((el, i) => el.classList.toggle("in", p >= i * 0.1));
     });

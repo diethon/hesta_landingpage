@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
-import { clamp, runWhileVisible, stickyProgress } from "@/lib/motion";
+import { canvasDpr, clamp, isTouch, runWhileVisible, stickyProgress } from "@/lib/motion";
 import { demo } from "@/lib/demoStore";
 import VoiceTry from "./VoiceTry";
 import { Story } from "./Story";
@@ -26,12 +26,26 @@ export default function DaySection() {
     const canvas = sec.querySelector("canvas")!;
     const clock = sec.querySelector<HTMLElement>(".clock")!, phase = sec.querySelector<HTMLElement>(".phase")!, ev = sec.querySelector<HTMLElement>(".events")!;
     let r: THREE.WebGLRenderer;
-    try { r = new THREE.WebGLRenderer({ canvas, antialias: true }); } catch { return; }
-    r.setPixelRatio(Math.min(devicePixelRatio, 2));
+    try { r = new THREE.WebGLRenderer({ canvas, antialias: !isTouch() }); } catch { return; }
+    r.setPixelRatio(canvasDpr());
     const scene = new THREE.Scene();
     const cam = new THREE.PerspectiveCamera(40, 1, 0.1, 200);
-    const fit = () => { const w = canvas.clientWidth, h = canvas.clientHeight; if (!w || !h) return; r.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); };
-    fit(); const ro = new ResizeObserver(fit); ro.observe(canvas);
+    // Màn dọc: thẻ đồng hồ ở trên và thẻ chữ ở dưới chiếm phần lớn màn hình,
+    // nên dời tâm khung hình vào khoảng trống giữa 2 thẻ (setViewOffset) và lùi camera cho vừa.
+    const topCard = sec.querySelector<HTMLElement>(".day-top")!, copyCard = sec.querySelector<HTMLElement>(".day-copy")!;
+    let zoom = 1;
+    const fit = () => {
+      const w = canvas.clientWidth, h = canvas.clientHeight; if (!w || !h) return;
+      r.setSize(w, h, false); cam.aspect = w / h;
+      if (w < h) {
+        const c = canvas.getBoundingClientRect(), top = topCard.getBoundingClientRect().bottom - c.top, bottom = copyCard.getBoundingClientRect().top - c.top;
+        const band = Math.max(h * 0.25, bottom - top);
+        cam.setViewOffset(w, h, 0, h / 2 - (top + bottom) / 2, w, h);
+        zoom = clamp((h / band) * 0.75, 1, 2);
+      } else { cam.clearViewOffset(); zoom = 1; }
+      cam.updateProjectionMatrix();
+    };
+    fit(); const ro = new ResizeObserver(fit); [canvas, topCard, copyCard].forEach((el) => ro.observe(el));
 
     const hemi = new THREE.HemisphereLight(0xbfe6f7, 0x3a4a5a, 0.6); scene.add(hemi);
     const sun = new THREE.DirectionalLight(0xfff1d6, 1); scene.add(sun);
@@ -79,7 +93,7 @@ export default function DaySection() {
         }));
       }
       const wide = canvas.clientWidth > 860, ang = Math.atan2(11, 9) + p * 0.9;
-      cam.position.set(Math.cos(ang) * 14.5, 6.2, Math.sin(ang) * 14.5); cam.lookAt(wide ? -2.5 : 0, 1.6, 0);
+      const R = 14.5 * zoom; cam.position.set(Math.cos(ang) * R, 6.2 * zoom, Math.sin(ang) * R); cam.lookAt(wide ? -2.5 : 0, 1.6, 0);
       r.render(scene, cam);
     });
     return () => { stop(); ro.disconnect(); r.dispose(); };

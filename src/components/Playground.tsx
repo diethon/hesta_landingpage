@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { demo, setLight, triggerGas, useDemo, type Room } from "@/lib/demoStore";
-import { runWhileVisible, prefersReducedMotion } from "@/lib/motion";
+import { canvasDpr, isTouch, runWhileVisible, prefersReducedMotion } from "@/lib/motion";
 import { useLang, useTr } from "@/lib/i18n";
 import VoiceTry from "./VoiceTry";
 
@@ -34,8 +34,8 @@ export default function Playground() {
   useEffect(() => {
     const sec = ref.current!, canvas = sec.querySelector("canvas")!;
     let r: THREE.WebGLRenderer;
-    try { r = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true }); } catch { return; }
-    r.setPixelRatio(Math.min(devicePixelRatio, 2));
+    try { r = new THREE.WebGLRenderer({ canvas, antialias: !isTouch(), alpha: true }); } catch { return; }
+    r.setPixelRatio(canvasDpr());
     const scene = new THREE.Scene();
     const cam = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
     const fit = () => { const w = canvas.clientWidth, h = canvas.clientHeight; if (!w || !h) return; r.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); };

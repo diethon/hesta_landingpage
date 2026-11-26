@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { prefersReducedMotion, runWhileVisible } from "@/lib/motion";
+import { canvasDpr, prefersReducedMotion, runWhileVisible } from "@/lib/motion";
 import { triggerGas } from "@/lib/demoStore";
 import { Story } from "./Story";
 import { useTr } from "@/lib/i18n";
@@ -26,7 +26,7 @@ export default function AnomalySection() {
     let W = 0, H = 0, frame = 0, nextSpike = 80, ticketNo = 4127;
     const timers: number[] = [];
     const fit = () => {
-      const d = Math.min(devicePixelRatio, 2); W = c.clientWidth; H = c.clientHeight;
+      const d = canvasDpr(); W = c.clientWidth; H = c.clientHeight;
       c.width = W * d; c.height = H * d; ctx.setTransform(d, 0, 0, d, 0, 0);
     };
     fit();
@@ -68,7 +68,8 @@ export default function AnomalySection() {
         const lv = s.v[L - 1]; ctx.fillStyle = s.color; ctx.beginPath(); ctx.arc(x1, Y(lv), 4, 0, 7); ctx.fill();
         if (s.mark > 0) { ctx.strokeStyle = "#e86767"; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(X(s.mark), Y(s.v[s.mark]), 9, 0, 7); ctx.stroke(); }
         ctx.fillStyle = "#5f7184"; ctx.font = '12px "JetBrains Mono", monospace';
-        ctx.fillText(`${s.name} · ${lv.toFixed(s.unit === "W" ? 0 : 1)}${s.unit} · ${tr("ngưỡng")} ${s.max}${s.unit}`, x0, y0 + 14);
+        const val = `${s.name} · ${lv.toFixed(s.unit === "W" ? 0 : 1)}${s.unit}`;
+        ctx.fillText(W < 520 ? val : `${val} · ${tr("ngưỡng")} ${s.max}${s.unit}`, x0, y0 + 14); // màn hẹp: bỏ phần ngưỡng để không đè nhãn "Dữ liệu minh họa"
       });
     });
     return () => { stop(); ro.disconnect(); timers.forEach(clearTimeout); };

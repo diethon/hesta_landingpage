@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { FAQ, TIMELINE } from "@/content/project";
-import { clamp, runWhileVisible } from "@/lib/motion";
+import { clamp, runWhileVisible, viewRect } from "@/lib/motion";
 import { useTr } from "@/lib/i18n";
 
 export function Timeline() {
@@ -10,7 +10,7 @@ export function Timeline() {
   useEffect(() => {
     const sec = ref.current!, line = sec.querySelector<HTMLElement>(".tl-fill")!, items = [...sec.querySelectorAll<HTMLElement>(".tl li")];
     return runWhileVisible(sec, () => {
-      const r = sec.querySelector(".tl")!.getBoundingClientRect();
+      const r = viewRect(sec.querySelector(".tl")!);
       const p = clamp((innerHeight * 0.65 - r.top) / r.height);
       line.style.transform = `scaleY(${p})`;
       items.forEach((li, i) => li.classList.toggle("in", p >= (i + 0.2) / items.length));

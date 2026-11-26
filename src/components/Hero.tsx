@@ -61,7 +61,7 @@ export default function Hero() {
           <div><dt>24/7</dt><dd>{tr("Kịch bản tự chạy")}</dd></div>
         </dl>
       </div>
-      <p className="hero-hint">{tr("Di chuột để đẩy dữ liệu · nhấn giữ để hút về")}</p>
+      <p className="hero-hint"><span className="hint-mouse">{tr("Lướt chuột để khuấy · nhấp để tạo sóng & đổi hình · giữ rồi thả để nổ")}</span><span className="hint-touch">{tr("Chạm để tạo sóng & đổi hình · nghiêng hoặc lắc máy")}</span></p>
       <button type="button" className="pause" onClick={() => setPaused((p) => !p)} aria-pressed={paused}>
         {paused ? tr("▶ Chạy hiệu ứng") : tr("❚❚ Tạm dừng hiệu ứng")}
       </button>
