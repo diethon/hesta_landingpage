@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 import { Logo } from "./Logo";
 import { DASHBOARD_URL } from "@/content/project";
 import { useLang, useTr } from "@/lib/i18n";
+import "./header.css";
 
 /** Header dùng chung cho trang chủ và trang Bảng giá. Trên mobile nav gom vào nút 3 gạch. */
 export default function SiteHeader({ page }: { page: "home" | "pricing" }) {
@@ -28,15 +29,20 @@ export default function SiteHeader({ page }: { page: "home" | "pricing" }) {
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
+    const onResize = () => { if (window.innerWidth > 960) setOpen(false); };
     addEventListener("keydown", onKey);
-    return () => removeEventListener("keydown", onKey);
+    addEventListener("resize", onResize);
+    return () => {
+      removeEventListener("keydown", onKey);
+      removeEventListener("resize", onResize);
+    };
   }, [open]);
 
   return (
     <header className="site-header">
       <div className="wrap">
         <a href={page === "home" ? "#top" : home} aria-label={tr(page === "home" ? "HESTA, về đầu trang" : "HESTA, về trang chủ")}><Logo tagline={false} /></a>
-        <nav aria-label={tr("Mục lục")}>
+        <nav className="head-nav" aria-label={tr("Mục lục")}>
           {links.map((l) => <a key={l.href} href={l.href} aria-current={l.current ? "page" : undefined}>{l.label}</a>)}
         </nav>
         <div className="head-actions">

@@ -1,0 +1,134 @@
+/* Dedicated header stylesheet imported directly by SiteHeader.tsx so Turbopack always bundles & HMR-reloads it cleanly */
+
+.site-header .head-nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.site-header .head-nav a {
+  color: var(--muted);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+
+.site-header .head-nav a:hover,
+.site-header .head-nav a[aria-current="page"] {
+  color: var(--ink);
+}
+
+.site-header .head-nav a[aria-current="page"] {
+  font-weight: 700;
+}
+
+.site-header .head-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+}
+
+.site-header .head-actions .btn {
+  white-space: nowrap;
+}
+
+.site-header .lbl-full {
+  display: inline;
+}
+
+.site-header .lbl-short {
+  display: none;
+}
+
+.site-header .menu-btn {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: #ffffff;
+  color: var(--ink);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  flex: none;
+}
+
+.site-header nav.mobile-menu {
+  position: absolute;
+  top: var(--hh);
+  left: 0;
+  right: 0;
+  z-index: 30;
+  display: none;
+  flex-direction: column;
+  gap: 0;
+  padding: 8px max(20px, env(safe-area-inset-left, 0px)) 16px;
+  background: rgba(248, 252, 255, 0.98);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 18px 40px rgba(15, 27, 38, 0.12);
+}
+
+.site-header nav.mobile-menu a {
+  display: block;
+  padding: 13px 4px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--fg);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+}
+
+.site-header nav.mobile-menu a:last-child {
+  border-bottom: 0;
+}
+
+.site-header nav.mobile-menu a[aria-current="page"] {
+  color: var(--primary-strong);
+}
+
+.site-header nav.mobile-menu a.mm-dashboard {
+  margin-top: 10px;
+  padding: 12px 16px;
+  border-bottom: 0;
+  text-align: center;
+  border-radius: 12px;
+  background: var(--ink);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+@media (max-width: 960px) {
+  .site-header .head-nav {
+    display: none;
+  }
+
+  .site-header .menu-btn {
+    display: inline-flex;
+  }
+
+  .site-header nav.mobile-menu {
+    display: flex;
+  }
+}
+
+@media (max-width: 760px) {
+  .site-header .head-actions .btn {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header .lbl-full {
+    display: none;
+  }
+
+  .site-header .lbl-short {
+    display: inline;
+  }
+}
