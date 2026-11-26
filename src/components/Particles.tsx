@@ -147,17 +147,23 @@ export default function Particles({ shapes, count: countProp = 8000, cycleMs = 4
     type Perm = { requestPermission?: () => Promise<string> };
     const DOEv = typeof DeviceOrientationEvent === "undefined" ? undefined : (DeviceOrientationEvent as unknown as Perm);
     const DMEv = typeof DeviceMotionEvent === "undefined" ? undefined : (DeviceMotionEvent as unknown as Perm);
+    // Safari chỉ hiện hộp thoại khi gọi trong touchend/click (pointerdown không tính là thao tác người dùng).
+    // Gọi ở lần chạm bất kỳ trên trang; bị từ chối/lỗi thì lần chạm sau hỏi lại.
     const askTilt = () => {
       if (asked) return;
       asked = true;
-      DOEv?.requestPermission?.().then((s) => s === "granted" && addEventListener("deviceorientation", onTilt)).catch(() => {});
-      DMEv?.requestPermission?.().then((s) => s === "granted" && addEventListener("devicemotion", onMotion)).catch(() => {});
+      const ask = (P: Perm | undefined, type: "deviceorientation" | "devicemotion", fn: EventListener) =>
+        P?.requestPermission?.().then((s) => {
+          if (s === "granted") { addEventListener(type, fn); removeEventListener("touchend", askTilt); }
+          else asked = false;
+        }).catch(() => (asked = false));
+      ask(DOEv, "deviceorientation", onTilt as EventListener);
+      ask(DMEv, "devicemotion", onMotion as EventListener);
     };
     const onDown = (e: PointerEvent) => {
       onMove(e);
       if (!ptr.inside || (e.target as Element).closest?.("a, button")) return;
       Object.assign(ptr, { down: true, downAt: performance.now(), sx: e.clientX, sy: e.clientY, moved: 0 });
-      askTilt();
     };
     const onUp = (e: PointerEvent) => {
       if (!ptr.down) return;
@@ -176,6 +182,7 @@ export default function Particles({ shapes, count: countProp = 8000, cycleMs = 4
       addEventListener("pointerdown", onDown); addEventListener("pointerup", onUp); addEventListener("pointercancel", onCancel);
       if (DOEv && !DOEv.requestPermission) addEventListener("deviceorientation", onTilt);
       if (DMEv && !DMEv.requestPermission) addEventListener("devicemotion", onMotion);
+      if (DOEv?.requestPermission || DMEv?.requestPermission) addEventListener("touchend", askTilt, { passive: true });
     }
 
     onShapeRef.current?.(shapes[0]);
@@ -258,7 +265,7 @@ export default function Particles({ shapes, count: countProp = 8000, cycleMs = 4
     return () => {
       stop(); ro.disconnect(); removeEventListener("pointermove", onMove);
       removeEventListener("pointerdown", onDown); removeEventListener("pointerup", onUp); removeEventListener("pointercancel", onCancel);
-      removeEventListener("deviceorientation", onTilt); removeEventListener("devicemotion", onMotion);
+      removeEventListener("deviceorientation", onTilt); removeEventListener("devicemotion", onMotion); removeEventListener("touchend", askTilt);
       geo.dispose(); mat.dispose(); renderer.dispose();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
