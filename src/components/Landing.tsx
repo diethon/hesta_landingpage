@@ -23,40 +23,21 @@ import SectionDivider from "./SectionDivider";
 import BackToTop from "./BackToTop";
 import Presenter from "./Presenter";
 import { Logo } from "./Logo";
-import { DASHBOARD_URL } from "@/content/project";
-import { useLang, useTr } from "@/lib/i18n";
+import SiteHeader from "./SiteHeader";
+import { useTr } from "@/lib/i18n";
 
 // Màu nền 2 phía của mỗi đường phân cách phải khớp với section liền trên/dưới.
 const BG = "#f8fcff", SKY = "#eef7fb", DAY = "#cfe6f3", INK = "#0f1b26";
 
 export default function Landing() {
-  const tr = useTr(), lang = useLang();
+  const tr = useTr();
   return (
     <>
       <Intro />
       <IncidentLayer />
       <Presenter />
       <BackToTop />
-      <header className="site-header">
-        <div className="wrap">
-          <a href="#top" aria-label={tr("HESTA, về đầu trang")}><Logo tagline={false} /></a>
-          <nav aria-label={tr("Mục lục")}>
-            <a href="#name">{tr("Câu chuyện")}</a>
-            <a href="#twin">{tr("Làm gì")}</a>
-            <a href="#playground">{tr("Thử ngay")}</a>
-            <a href="#energy">{tr("Tiết kiệm")}</a>
-            <a href="#install">{tr("Lắp đặt")}</a>
-            <a href={lang === "vi" ? "/bao-gia" : "/en/pricing"}>{tr("Bảng giá")}</a>
-            <a href="#journey">{tr("Đồ án")}</a>
-          </nav>
-          <div className="head-actions">
-            <a className="lang-switch" href={lang === "vi" ? "/en" : "/"} hrefLang={lang === "vi" ? "en" : "vi"} aria-label={lang === "vi" ? "Switch to English" : "Chuyển sang tiếng Việt"}>
-              <span data-on={lang === "vi"}>VI</span><span data-on={lang === "en"}>EN</span>
-            </a>
-            <a className="btn btn-ink btn-sm" href={`${DASHBOARD_URL}/login`}><span className="lbl-full">{tr("Vào Dashboard")}</span><span className="lbl-short">Dashboard</span></a>
-          </div>
-        </div>
-      </header>
+      <SiteHeader page="home" />
       <main>
         <Hero />
         <SectionDivider top={BG} bottom={BG} />

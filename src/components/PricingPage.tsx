@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Cpu, Minus, Plus, ShieldCheck, ShoppingCart, Trash2, X } from "lucide-react";
-import { Logo } from "./Logo";
-import { DASHBOARD_URL, getRuntimeApiBaseUrl } from "@/content/project";
+import { ArrowLeft, Cpu, Minus, Plus, ShieldCheck, ShoppingCart, Trash2, X } from "lucide-react";
+import SiteHeader from "./SiteHeader";
+import { getRuntimeApiBaseUrl } from "@/content/project";
 import { guideFor, pick, IMAGE_CREDITS } from "@/content/pricing";
 import { useLang, useTr } from "@/lib/i18n";
 import "./pricing.css";
@@ -79,20 +79,11 @@ export default function PricingPage() {
 
   return (
     <>
-      <header className="site-header">
-        <div className="wrap">
-          <a href={home} aria-label={tr("HESTA, về trang chủ")}><Logo tagline={false} /></a>
-          <div className="head-actions">
-            <a className="lang-switch" href={lang === "vi" ? "/en/pricing" : "/bao-gia"} hrefLang={lang === "vi" ? "en" : "vi"} aria-label={lang === "vi" ? "Switch to English" : "Chuyển sang tiếng Việt"}>
-              <span data-on={lang === "vi"}>VI</span><span data-on={lang === "en"}>EN</span>
-            </a>
-            <a className="btn btn-ink btn-sm" href={`${DASHBOARD_URL}/login`}><span className="lbl-full">{tr("Vào Dashboard")}</span><span className="lbl-short">Dashboard</span></a>
-          </div>
-        </div>
-      </header>
+      <SiteHeader page="pricing" />
 
       <main className="pr-page">
         <div className="wrap">
+          <a className="pr-back" href={home}><ArrowLeft size={16} aria-hidden="true" />{tr("Về trang chủ")}</a>
           <div className="eyebrow">{tr("Bảng giá tham khảo")}</div>
           <h1 className="pr-title">{tr("Thiết bị nhà thông minh HESTA")}</h1>
           <p className="lead">{tr("Xem từng thiết bị là gì, hoạt động ra sao và giá bao nhiêu. Chọn số lượng để tự tính chi phí thiết bị cho ngôi nhà của bạn.")}</p>

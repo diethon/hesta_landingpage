@@ -83,3 +83,5 @@
 .pr-quote h2 { display: flex; align-items: center; gap: 8px; }
 .pr-quote h2 svg { color: var(--primary-strong); }
 .pr-card-foot small { white-space: nowrap; }
+.pr-back { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 18px; font-size: 14px; font-weight: 600; color: var(--muted); text-decoration: none; }
+.pr-back:hover { color: var(--ink); }

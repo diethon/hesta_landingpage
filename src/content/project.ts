@@ -41,5 +41,5 @@ export function getRuntimeApiBaseUrl(): string {
       return "http://localhost:8080";
     }
   }
-  return "https://dashboard.hesta.homes";
+  return "https://api.hesta.homes";
 }

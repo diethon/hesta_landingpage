@@ -525,4 +525,8 @@ export const EN: Record<string, string> = {
   "Thiết bị này là gì?": "What is it?",
   "Hoạt động như thế nào?": "How does it work?",
   "Dùng để làm gì?": "What is it for?",
+  "Về trang chủ": "Back to home",
+  "Trang chủ": "Home",
+  "Mở menu": "Open menu",
+  "Đóng menu": "Close menu",
 };
