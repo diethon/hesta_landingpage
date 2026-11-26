@@ -46,6 +46,7 @@ export default function Landing() {
             <a href="#playground">{tr("Thử ngay")}</a>
             <a href="#energy">{tr("Tiết kiệm")}</a>
             <a href="#install">{tr("Lắp đặt")}</a>
+            <a href={lang === "vi" ? "/bao-gia" : "/en/pricing"}>{tr("Bảng giá")}</a>
             <a href="#journey">{tr("Đồ án")}</a>
           </nav>
           <div className="head-actions">

@@ -1,0 +1,85 @@
+/* Trang Bảng giá: dùng biến màu chung trong globals.css */
+.pr-page { padding: clamp(28px, 5vw, 56px) 0 80px; }
+.pr-title { font-size: clamp(32px, 4.6vw, 56px); margin: 10px 0 14px; }
+.pr-note { margin-top: 32px; color: var(--muted); }
+.pr-error { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding: 18px 20px; background: #fff; border: 1px solid var(--line); border-radius: 18px; }
+
+.pr-layout { margin-top: 32px; display: grid; gap: 28px; align-items: start; }
+@media (min-width: 1024px) { .pr-layout { grid-template-columns: 1fr 340px; } }
+
+.pr-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.pr-chips button { font: inherit; font-size: 14px; font-weight: 600; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--line); background: #fff; color: var(--muted); cursor: pointer; }
+.pr-chips button:hover { color: var(--ink); }
+.pr-chips button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+.pr-grid { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+.pr-card { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line); border-radius: 22px; overflow: hidden; box-shadow: 0 14px 40px rgba(31, 51, 68, 0.05); transition: transform 0.22s ease, box-shadow 0.22s ease; }
+.pr-card:hover { transform: translateY(-4px); box-shadow: 0 22px 54px rgba(31, 51, 68, 0.09); }
+.pr-open { all: unset; cursor: pointer; display: block; }
+.pr-open:focus-visible { outline: 3px solid var(--primary); outline-offset: -3px; }
+.pr-img-box { aspect-ratio: 4 / 3; overflow: hidden; background: var(--sky); }
+.pr-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.35s ease; }
+.pr-card:hover .pr-img { transform: scale(1.05); }
+.pr-img-empty { display: grid; place-items: center; color: var(--bp-soft); opacity: 0.6; }
+.pr-card-body { padding: 16px 18px 0; display: grid; gap: 4px; }
+.pr-card-body h2 { font-size: 17px; line-height: 1.3; margin: 0; letter-spacing: -0.01em; }
+.pr-type { font-size: 12px; font-weight: 700; color: var(--primary-strong); }
+.pr-model { font-family: var(--font-mono), monospace; font-size: 12px; color: var(--muted); }
+.pr-card-foot { margin-top: auto; padding: 16px 18px 18px; display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; }
+.pr-card-foot strong { display: block; font-size: 18px; color: var(--ink); }
+.pr-card-foot small, .pr-dialog small { color: var(--muted); font-size: 12px; }
+
+.pr-qty { display: flex; align-items: center; gap: 6px; }
+.pr-qty button { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--line); background: #fff; font-size: 18px; line-height: 1; color: var(--ink); cursor: pointer; }
+.pr-qty button:hover:not(:disabled) { background: var(--sky); }
+.pr-qty button:disabled { opacity: 0.35; cursor: not-allowed; }
+.pr-qty span { min-width: 22px; text-align: center; font-weight: 700; }
+
+.pr-quote { background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: 20px; box-shadow: 0 14px 40px rgba(31, 51, 68, 0.06); }
+.pr-quote h2 { font-size: 19px; margin: 0 0 10px; }
+.pr-hint { color: var(--muted); font-size: 13px; margin: 8px 0 0; }
+.pr-lines { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; font-size: 14px; max-height: 260px; overflow: auto; }
+.pr-lines li { display: flex; justify-content: space-between; gap: 12px; }
+.pr-lines span { color: var(--muted); }
+.pr-total { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-size: 14px; color: var(--muted); }
+.pr-total strong { font-size: 22px; color: var(--primary-strong); }
+.pr-actions { margin-top: 14px; display: flex; gap: 8px; }
+.pr-actions .btn-ink { flex: 1; }
+@media (min-width: 1024px) { .pr-quote { position: sticky; top: calc(var(--hh) + 20px); } }
+/* Mobile: báo giá thành thanh cố định dưới đáy, ẩn danh sách chi tiết */
+@media (max-width: 1023px) {
+  .pr-page { padding-bottom: 200px; }
+  .pr-quote { position: fixed; left: 0; right: 0; bottom: 0; z-index: 15; border-radius: 20px 20px 0 0; padding: 14px max(16px, env(safe-area-inset-left, 0px)) calc(14px + env(safe-area-inset-bottom, 0px)); }
+  .pr-quote h2, .pr-lines, .pr-hint { display: none; }
+  .pr-total { margin-top: 0; padding-top: 0; border-top: 0; }
+  .pr-actions { margin-top: 10px; }
+}
+
+.pr-credits { margin-top: 56px; font-size: 12px; color: var(--muted); }
+.pr-credits a { color: inherit; }
+
+.pr-dialog { margin: auto; width: min(760px, calc(100vw - 32px)); max-height: 90dvh; padding: 0; border: 1px solid var(--line); border-radius: 24px; background: #fff; color: var(--fg); box-shadow: 0 30px 80px rgba(15, 27, 38, 0.25); }
+.pr-dialog::backdrop { background: rgba(15, 27, 38, 0.4); backdrop-filter: blur(3px); }
+.pr-dialog > div { position: relative; }
+.pr-close { display: grid; place-items: center; position: absolute; top: 12px; right: 12px; z-index: 1; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.9); font-size: 22px; line-height: 1; cursor: pointer; color: var(--ink); }
+.pr-dialog-head { display: grid; gap: 0; }
+@media (min-width: 640px) { .pr-dialog-head { grid-template-columns: 280px 1fr; } .pr-dialog-head .pr-img-box { aspect-ratio: 1; } }
+.pr-dialog-head > div:last-child { padding: 22px 24px; display: grid; gap: 6px; align-content: start; }
+.pr-dialog-head h2 { font-size: 24px; margin: 0; }
+.pr-price { font-size: 26px; font-weight: 800; color: var(--primary-strong); margin: 6px 0 0; }
+.pr-dialog-head .pr-qty { margin-top: 10px; }
+.pr-dialog-body { border-top: 1px solid var(--line); padding: 22px 24px 26px; display: grid; gap: 20px; font-size: 15px; }
+.pr-dialog-body h3 { font-size: 16px; margin: 0 0 8px; letter-spacing: 0; }
+.pr-dialog-body p { margin: 0 0 6px; color: var(--muted); }
+.pr-steps { margin: 0; padding: 0; list-style: none; counter-reset: s; display: grid; gap: 10px; }
+.pr-steps li { counter-increment: s; display: grid; grid-template-columns: 26px 1fr; gap: 10px; color: var(--muted); }
+.pr-steps li::before { content: counter(s); width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 800; color: var(--mint-strong); background: rgba(123, 220, 181, 0.22); }
+.pr-uses { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.pr-uses li { font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 999px; background: var(--sky); color: var(--fg); }
+
+@media (prefers-reduced-motion: reduce) { .pr-card, .pr-img { transition: none; } .pr-card:hover, .pr-card:hover .pr-img { transform: none; } }
+
+.pr-warranty { display: inline-flex; align-items: center; gap: 4px; }
+.pr-quote h2 { display: flex; align-items: center; gap: 8px; }
+.pr-quote h2 svg { color: var(--primary-strong); }
+.pr-card-foot small { white-space: nowrap; }
